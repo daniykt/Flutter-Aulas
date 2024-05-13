@@ -18,7 +18,7 @@ class Aplicacao extends StatelessWidget {
         "/detail": (context) => const DetalheProdutoPage(),
         "/carrinho": (context) => const CarrinhoPage(),
       },
-      initialRoute: "/",
+      initialRoute: "/login",
       debugShowCheckedModeBanner: false,
     );
   }
