@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frutas_2/vm/auth.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -55,5 +57,24 @@ class LoginPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void login(BuildContext context, String usuario, String senha) {
+    final auth = Provider.of<Auth>(context, listen: false);
+
+    try {
+      auth.login(usuario, senha);
+      if (auth.estaLogado) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          "/",
+          (route) => false,
+        );
+      }
+    } on Exception catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    }
   }
 }
