@@ -67,7 +67,7 @@ class LoginPage extends StatelessWidget {
       if (auth.estaLogado) {
         Navigator.pushNamedAndRemoveUntil(
           context,
-          "/",
+          "/login",
           (route) => false,
         );
       }

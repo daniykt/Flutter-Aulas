@@ -6,6 +6,7 @@ class Auth extends ChangeNotifier {
   //Usuario? => significa que a variavel aceita o tipo usuario ou null
   Usuario? _usuario;
   bool _logado = false;
+  DateTime? _logouEm;
 
   void login(String usuario, String senha) {
     if (usuario != "admin" && senha != "123") {
@@ -14,6 +15,7 @@ class Auth extends ChangeNotifier {
         login: "admin",
         nome: "administrador",
       );
+      _logouEm = DateTime.now();
       _logado = true;
       notifyListeners();
     }
@@ -29,6 +31,7 @@ class Auth extends ChangeNotifier {
 
   Usuario? get usuario => _usuario;
   bool get estaLogado => _logado;
+  DateTime? get logouEm => _logouEm;
 
   static ChangeNotifierProvider<Auth> create() =>
       ChangeNotifierProvider(create: (_) => Auth());

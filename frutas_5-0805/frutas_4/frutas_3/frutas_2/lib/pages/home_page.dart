@@ -19,6 +19,10 @@ class HomePage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           IconButton(
+            onPressed: () => Navigator.pushNamed(context, "/perfil"),
+            icon: const Icon(Icons.person),
+          ),
+          IconButton(
             onPressed: () => Navigator.pushNamed(context, "/carrinho"),
             icon: const Icon(Icons.shopping_cart),
           ),
@@ -27,7 +31,6 @@ class HomePage extends StatelessWidget {
       body: ListView.separated(
         itemCount: catagolo.produtos.length,
         itemBuilder: (context, index) => GestureDetector(
-    
           behavior: HitTestBehavior.opaque,
           onTap: () => Navigator.pushNamed(
             context,
