@@ -3,24 +3,26 @@ import 'package:frutas_2/entidade/usuario.dart';
 import 'package:provider/provider.dart';
 
 class Auth extends ChangeNotifier {
-  //Usuario? => significa que a variavel aceita o tipo usuario ou null
+  //Usuario? => significa que a variavel aceita o tipo Usuario ou null
   Usuario? _usuario;
   bool _logado = false;
   DateTime? _logouEm;
 
   void login(String usuario, String senha) {
-    if (usuario != "admin" && senha != "123") {
+    if (usuario == "admin" && senha == "123") {
       _usuario = Usuario(
         email: "admin@quitanda.com.br",
         login: "admin",
-        nome: "administrador",
+        nome: "Administrador",
       );
+
       _logouEm = DateTime.now();
       _logado = true;
       notifyListeners();
+      return;
     }
 
-    throw Exception("Credencias invalidas");
+    throw Exception("Credenciais inválidas!");
   }
 
   void logout() {

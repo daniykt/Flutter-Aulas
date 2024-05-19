@@ -10,51 +10,73 @@ class LoginPage extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(""),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text(
-            "Quitanda",
-            style: Theme.of(context).textTheme.headlineLarge,
-          ),
-          const SizedBox(
-            width: 200,
-            height: 60,
-            child: TextField(
-              decoration: InputDecoration(
-                labelText: "Usuario",
-              ),
-            ),
-          ),
-          const SizedBox(
-            width: 200,
-            height: 60,
-            child: TextField(
-              decoration: InputDecoration(
-                labelText: "Senha",
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 200,
-            height: 60,
-            child: ElevatedButton(
-                onPressed: () => Navigator.pushNamed(context, "/"),
-                child: const Text("Entrar")),
-          ),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+    final usuarioController = TextEditingController();
+    final senhaController = TextEditingController();
+
+    final linkStyle = textTheme.bodyMedium?.copyWith(
+      decoration: TextDecoration.underline,
+    );
+
+        return Scaffold(
+      body: Center(
+        child: SizedBox(
+          width: 400,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Text("Esqueci a senha"),
-              Text("Cadastro"),
+              Container(
+                margin: const EdgeInsets.only(bottom: 50),
+                child: Text(
+                  "Quitanda",
+                  style: textTheme.headlineLarge?.copyWith(
+                    color: colorScheme.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              TextField(
+                controller: usuarioController,
+                decoration: const InputDecoration(
+                  labelText: "Usuário",
+                ),
+              ),
+              TextField(
+                controller: senhaController,
+                decoration: const InputDecoration(
+                  labelText: "Senha",
+                ),
+                obscureText: true,
+                autocorrect: false,
+              ),
+              Container(
+                width: double.maxFinite,
+                margin: const EdgeInsets.only(top: 20, bottom: 20),
+                child: ElevatedButton(
+                  onPressed: () => login(
+                    context,
+                    usuarioController.text,
+                    senhaController.text,
+                  ),
+                  child: const Text("Entrar"),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Esqueci minha senha",
+                    style: linkStyle,
+                  ),
+                  Text(
+                    "Cadastrar",
+                    style: linkStyle,
+                  ),
+                ],
+              ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -64,16 +86,45 @@ class LoginPage extends StatelessWidget {
 
     try {
       auth.login(usuario, senha);
+
       if (auth.estaLogado) {
+        /*
+        * considerando que a navegação em aplicações flutter são 
+        * baseadas em pilha, ou seja:
+        *
+        * tela 2 ------------
+        * tela 1 ------------
+        * tela 0 ------------
+        *
+        * ao pressionar o voltar na "tela 2", a tela 2 será fechada
+        * e a tela 1 vai aparecer, pois ela é a próxima na pilha.
+        *
+        * No nosso caso ao terminar o login, com a navegação "simples",
+        * teriamos:
+        *
+        * home  ------
+        * login ------
+        *
+        * notem que, apesar da tela home ser a principal do sistema,
+        * ainda temos a tela do login na pilha. Dessa forma, ao voltar
+        * da home, ao invés de sair da aplicação, iríamos para a tela
+        * de login...
+        *
+        * como não queremos isso, usamos o pushNamedAndRemoveUntil para
+        * abrir a tela home removendo todos que estiverem abaixo 
+        * na pilha
+        */
         Navigator.pushNamedAndRemoveUntil(
           context,
-          "/login",
+          "/",
           (route) => false,
         );
       }
     } on Exception catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
+        SnackBar(
+          content: Text(e.toString()),
+        ),
       );
     }
   }
