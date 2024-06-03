@@ -14,4 +14,25 @@ class Produto {
     required this.estoque,
     required this.preco,
   });
+//atributo
+  bool get temEstoque => estoque > 0;
+//método
+  bool podeVender(int quantidade) {
+    return estoque >= quantidade;
+  }
+//Fazendo com que quando fique sem estoque dar uma mensagem
+  Produto baixarEstoque(int quantidade) {
+    if (podeVender(quantidade)) {
+      //a exceção
+      throw Exception("Estoque indisponível!");
+    }
+//e o returno
+    return Produto(
+        id: id,
+        nome: nome,
+        foto: foto,
+        categoria: categoria,
+        estoque: estoque - quantidade,
+        preco: preco);
+  }
 }
