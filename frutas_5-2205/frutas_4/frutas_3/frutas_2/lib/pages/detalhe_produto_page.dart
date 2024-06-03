@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frutas_2/entidade/produto.dart';
 import 'package:frutas_2/util/moeda.dart';
 import 'package:frutas_2/vm/carrinho.dart';
 import 'package:frutas_2/vm/catalogo.dart';
@@ -64,14 +65,37 @@ class DetalheProdutoPage extends StatelessWidget {
               detalhe("Preço", formataMoeda(produto.preco), null),
             ],
           ),
-          ElevatedButton(
-            onPressed: () => carrinho.adicionaItem(produto),
-            child: const Text("Adicionar no Carrinho"),
-          )
+          //Aqui ele vai avaliar
+          produto.temEstoque
+              ? botaoAdicionar(carrinho, produto)
+              : estoqueIndisponivel(context),
         ],
       ),
     );
   }
+
+//Botão
+  Widget botaoAdicionar(Carrinho carrinho, Produto produto) => SizedBox(
+      width: 300,
+      child: ElevatedButton(
+        onPressed: () => carrinho.adicionaItem(produto),
+        child: const Text("Adicionar no Carrinho"),
+      ));
+//Ele vai manter o margin e padding, vai preencher a tela toda
+//Tem uma mensagem dentro
+//As cores de error...
+  Widget estoqueIndisponivel(BuildContext context) => Container(
+        margin: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
+        width: double.maxFinite,
+        color: Theme.of(context).colorScheme.error,
+        child: Text(
+          "Não é permitido adicionar. Estoque indisponivel",
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: Theme.of(context).colorScheme.onError,
+              ),
+        ),
+      );
 
   Widget detalhe(String label, String conteudo, TextStyle? style) {
     return SizedBox(

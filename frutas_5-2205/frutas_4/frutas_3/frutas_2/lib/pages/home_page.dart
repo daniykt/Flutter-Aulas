@@ -31,10 +31,6 @@ class HomePage extends StatelessWidget {
         title: const Text("Home"),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
-          IconButton(
-            onPressed: () => Navigator.pushNamed(context, "/perfil"),
-            icon: const Icon(Icons.person),
-          ),
           Badge(
             label: Text("$quantidade"),
             isLabelVisible: quantidade > 0,
@@ -43,6 +39,10 @@ class HomePage extends StatelessWidget {
               onPressed: () => Navigator.pushNamed(context, "/carrinho"),
               icon: const Icon(Icons.shopping_cart),
             ),
+          ),
+          IconButton(
+            onPressed: () => Navigator.pushNamed(context, "/perfil"),
+            icon: const Icon(Icons.person),
           ),
         ],
       ),
