@@ -27,8 +27,12 @@ class CinemaPage extends StatelessWidget {
         // Define o número de itens na lista como o comprimento da lista de cinemas
         itemCount: cinemas.length,
         // Constrói cada item da lista usando um 'CinemaItem'
-        itemBuilder: (context, index) => CinemaItem(
-          cinema: cinemas[index], // Passa o cinema atual para o 'CinemaItem'
+        itemBuilder: (context, index) => GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () => Navigator.pushNamed(context, "/filme"),
+          child: CinemaItem(
+            cinema: cinemas[index], // Passa o cinema atual para o 'CinemaItem'
+          ),
         ),
       ),
     );
