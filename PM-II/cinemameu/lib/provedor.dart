@@ -1,5 +1,6 @@
 import 'package:cinemameu/app.dart';
 import 'package:cinemameu/vm/cinema_vm.dart';
+import 'package:cinemameu/vm/filme_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,7 @@ class Provedor extends StatelessWidget {
       providers: [
         // Adiciona o provider de 'CinemaViewModel' usando o método estático 'novo'
         CinemaViewModel.novo(),
+        filmeViewModel.novo(),
       ],
       // Define o widget filho que terá acesso aos providers
       child: const Aplicacao(),

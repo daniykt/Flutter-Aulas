@@ -1,4 +1,5 @@
 import 'package:cinemameu/pages/cinema_page.dart';
+import 'package:cinemameu/pages/filme_page.dart';
 import 'package:flutter/material.dart';
 
 class Aplicacao extends StatelessWidget {
@@ -9,8 +10,9 @@ class Aplicacao extends StatelessWidget {
     return MaterialApp(
       title: "Cinemeu",
       initialRoute: "/",
-      routes: { 
+      routes: {
         "/": (_) => const CinemaPage(),
+        "/filme": (_) => const FilmePage(),
       },
     );
   }
