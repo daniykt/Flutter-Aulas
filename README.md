@@ -1,2 +1,2 @@
 # Flutter-Aulas
-Projetos da escola
+Projetos do curso
